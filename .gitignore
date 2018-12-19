@@ -1,4 +1,4 @@
 /server/cmd/xum-insert-datos
 /server/cmd/xum-api-client
 
-.vscode/*
+/.vscode
