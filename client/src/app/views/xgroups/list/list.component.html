@@ -1,0 +1,56 @@
+<mat-card>
+    <mat-card-content>
+      <section class="list-wrapper">
+        <header class="list-header">
+            <span class="list-header-title">
+              <mat-icon>list</mat-icon>XGroups</span>
+            <span class="space-to-right"></span>
+            <button mat-raised-button color="primary">
+                <mat-icon>add</mat-icon>New</button>
+        </header>
+        <section class="list-filter">
+            <mat-form-field>
+                <input matInput type="text"
+                       placeholder="filtro">
+            </mat-form-field>
+            <mat-form-field>
+                <input matInput type="text"
+                       placeholder="otro filtro">
+            </mat-form-field>
+        </section>
+        <section class="list-table">
+          <!--mat-table class="lessons-table mat-elevation-z8" [dataSource]="dataSource"-->
+          <mat-table [dataSource]="dataSource">
+
+              <ng-container matColumnDef="id">
+                  <mat-header-cell *matHeaderCellDef>ID</mat-header-cell>
+                  <mat-cell *matCellDef="let xg">{{xg.ID}}</mat-cell>
+              </ng-container>
+
+              <ng-container matColumnDef="name">
+                  <mat-header-cell *matHeaderCellDef>Name</mat-header-cell>
+                  <mat-cell class="name-cell"
+                            *matCellDef="let xg">{{xg.Name}}</mat-cell>
+              </ng-container>
+
+              <ng-container matColumnDef="description">
+                  <mat-header-cell *matHeaderCellDef>Description</mat-header-cell>
+                  <mat-cell class="description-cell"
+                            *matCellDef="let xg">{{xg.Description}}</mat-cell>
+              </ng-container>
+
+              <ng-container matColumnDef="actived">
+                  <mat-header-cell *matHeaderCellDef>Actived</mat-header-cell>
+                  <mat-cell class="actived-cell"
+                            *matCellDef="let xg">{{xg.Actived}}</mat-cell>
+              </ng-container>
+
+              <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+
+              <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+
+          </mat-table>
+        </section>
+      </section>
+    </mat-card-content>
+  </mat-card>

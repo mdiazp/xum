@@ -1,0 +1,480 @@
+swagger: '2.0'
+info:
+  version: 0.1 (beta)
+  title: api-xum
+  description: XUsers Manager
+host: 'api.xum.local:1234'
+basePath: /
+schemes:
+  - http
+consumes:
+  - application/json
+produces:
+  - application/json
+paths:
+  /session:
+    post:
+      tags:
+        - account
+      parameters:
+        - $ref: '#/parameters/credentials'
+      responses:
+        '200':
+          schema:
+            $ref: '#/definitions/session'
+          description: token to use as header AuthToken
+        '401':
+          description: Unauthorized
+        '500':
+          description: Internal Server Error
+    delete:
+      tags:
+        - account
+      parameters:
+        - $ref: '#/parameters/authToken'
+      responses:
+        '200':
+          schema:
+            type: string
+          description: Session has been closed
+        '401':
+          description: Unauthorized
+        '500':
+          description: Internal Server Error
+  /user:
+    post:
+      tags:
+        - user
+      parameters:
+        - $ref: '#/parameters/authToken'
+        - $ref: '#/parameters/user'
+      responses:
+        '201':
+          schema:
+            $ref: '#/definitions/user'
+          description: Created
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+        '500':
+          description: Internal Server Error
+  /user/{id}:
+    get:
+      tags:
+        - user
+      parameters:
+        - $ref: '#/parameters/authToken'
+        - $ref: '#/parameters/user.id.inpath'
+      responses:
+        '200':
+          schema:
+            $ref: '#/definitions/user'
+          description: OK
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+        '500':
+          description: Internal Server Error
+  /users:
+    get:
+      tags:
+        - user
+      parameters:
+        - $ref: '#/parameters/authToken'
+        - $ref: '#/parameters/offset'
+        - $ref: '#/parameters/limit'
+        - $ref: '#/parameters/orderby'
+        - $ref: '#/parameters/desc'
+        - $ref: '#/parameters/users.usernamePrefix'
+        - $ref: '#/parameters/users.nameSubstr'
+        - $ref: '#/parameters/users.provider'
+        - $ref: '#/parameters/users.enabled'
+        - $ref: '#/parameters/users.rol'
+        - $ref: '#/parameters/users.xgroupWichAdmin'
+      responses:
+        '200':
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/user'
+          description: OK
+        '403':
+          description: Forbidden
+        '500':
+          description: Internal Server Error
+  /xgroup/{id}:
+    get:
+      tags:
+        - xgroup
+      parameters:
+        - $ref: '#/parameters/authToken'
+        - $ref: '#/parameters/xgroup.id.inpath'
+      responses:
+        '200':
+          schema:
+            $ref: '#/definitions/xgroup'
+          description: OK
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+        '500':
+          description: Internal Server Error
+  /xgroups:
+    get:
+      tags:
+        - xgroup
+      parameters:
+        - $ref: '#/parameters/authToken'
+        - $ref: '#/parameters/offset'
+        - $ref: '#/parameters/limit'
+        - $ref: '#/parameters/orderby'
+        - $ref: '#/parameters/desc'
+        - $ref: '#/parameters/xgroups.nameSubstr'
+        - $ref: '#/parameters/xgroups.actived'
+        - $ref: '#/parameters/xgroups.adminid'
+      responses:
+        '200':
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/xgroup'
+          description: OK
+        '403':
+          description: Forbidden
+        '500':
+          description: Internal Server Error
+  /xuser/{id}:
+    get:
+      tags:
+        - xuser
+      parameters:
+        - $ref: '#/parameters/authToken'
+        - $ref: '#/parameters/xuser.id.inpath'
+      responses:
+        '200':
+          schema:
+            $ref: '#/definitions/xuser'
+          description: OK
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+        '500':
+          description: Internal Server Error
+  /xusers:
+    get:
+      tags:
+        - xuser
+      parameters:
+        - $ref: '#/parameters/authToken'
+        - $ref: '#/parameters/offset'
+        - $ref: '#/parameters/limit'
+        - $ref: '#/parameters/orderby'
+        - $ref: '#/parameters/desc'
+        - $ref: '#/parameters/xusers.nameSubstr'
+        - $ref: '#/parameters/xusers.lastnameSubstr'
+        - $ref: '#/parameters/xusers.phoneSubstr'
+        - $ref: '#/parameters/xusers.identificationPrefix'
+        - $ref: '#/parameters/xusers.actived'
+        - $ref: '#/parameters/xusers.xgroupid'
+      responses:
+        '200':
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/xuser'
+          description: OK
+        '403':
+          description: Forbidden
+        '500':
+          description: Internal Server Error
+  /xuserscount:
+    get:
+      tags:
+        - xuser
+      parameters:
+        - $ref: '#/parameters/authToken'
+        - $ref: '#/parameters/xusers.nameSubstr'
+        - $ref: '#/parameters/xusers.lastnameSubstr'
+        - $ref: '#/parameters/xusers.phoneSubstr'
+        - $ref: '#/parameters/xusers.identificationPrefix'
+        - $ref: '#/parameters/xusers.actived'
+        - $ref: '#/parameters/xusers.xgroupid'
+      responses:
+        '200':
+          schema:
+            type: integer
+          description: OK
+        '403':
+          description: Forbidden
+        '500':
+          description: Internal Server Error
+definitions:
+  credentials:
+    properties:
+      Username:
+        maxLength: 50
+        format: string
+        type: string
+      Password:
+        maxLength: 50
+        format: password
+        type: string
+      Provider:
+        maxLength: 50
+        format: string
+        type: string
+  jwtToken:
+    properties:
+      token:
+        format: string
+        type: string
+  session:
+    properties:
+      User:
+        $ref: '#/definitions/user'
+      Token: 
+        format: string
+        type: string
+  user:
+    properties:
+      ID:
+        format: integer
+        type: integer
+        description: |-
+          Note:
+          This is a Primary Key.<pk/>
+      Provider:
+        maxLength: 100
+        format: character varying
+        type: string
+      Username:
+        maxLength: 100
+        format: character varying
+        type: string
+      Name:
+        maxLength: 100
+        format: character varying
+        type: string
+      Rol:
+        maxLength: 100
+        format: character varying
+        type: string
+      Enabled:
+        maxLength: 100
+        format: boolean
+        type: boolean
+  xgroup:
+    properties:
+      ID:
+        format: integer
+        type: integer
+        description: |-
+          Note:
+          This is a Primary Key.<pk/>
+      Name:
+        maxLength: 255
+        format: character varying
+        type: string
+      Description:
+        maxLength: 500
+        format: character varying
+        type: string
+      Actived:
+        format: boolean
+        type: boolean
+    type: object
+  xuser:
+    properties:
+      ID:
+        format: integer
+        type: integer
+        description: |-
+          Note:
+          This is a Primary Key.<pk/>
+      Name:
+        maxLength: 255
+        format: character varying
+        type: string
+      LastName:
+        maxLength: 255
+        format: character varying
+        type: string
+      Identification:
+        maxLength: 255
+        format: character varying
+        type: string
+      PhoneNumber:
+        maxLength: 100
+        format: character varying
+        type: string
+      Description:
+        maxLength: 500
+        format: character varying
+        type: string
+      Actived:
+        format: boolean
+        type: boolean
+      XGroupName:
+        maxLength: 100
+        format: character varying
+        type: string
+      XGroupID:
+        format: integer
+        type: integer
+parameters:
+  offset:
+    name: offset
+    description: offset to paginate results
+    required: false
+    in: query
+    type: integer
+  limit:
+    name: limit
+    description: limit to paginate results
+    required: false
+    in: query
+    type: integer
+  orderby:
+    name: orderby
+    description: for sorting of results by some some property
+    required: false
+    in: query
+    type: string
+  desc:
+    name: desc
+    description: for sorting of results descendently(true) o ascendently(false) 
+    required: false
+    in: query
+    type: boolean
+  credentials:
+    name: Credentials
+    description: for authentication
+    required: true
+    schema:
+      $ref: '#/definitions/credentials'
+    in: body
+  authToken:
+    name: AuthToken
+    description: for authentication
+    required: true
+    in: header
+    type: string
+  user:
+    name: User
+    description: User
+    required: true
+    schema:
+      $ref: '#/definitions/user'
+    in: body
+  user.id.inpath:
+    name: id
+    description: User ID
+    required: true
+    in: path
+    type: integer
+  users.usernamePrefix:
+    name: usernamePrefix
+    description: for horizontal filtering
+    required: false
+    in: query
+    type: string
+  users.nameSubstr:
+    name: nameSubstr
+    description: for horizontal filtering
+    required: false
+    in: query
+    type: string
+  users.provider:
+    name: provider
+    description: for horizontal filtering
+    required: false
+    in: query
+    type: string
+  users.enabled:
+    name: enabled
+    description: for horizontal filtering
+    required: false
+    in: query
+    type: boolean
+  users.rol:
+    name: rol
+    description: for horizontal filtering
+    required: false
+    in: query
+    type: string
+  users.xgroupWichAdmin:
+    name: xgroupWichAdmin
+    description: for horizontal filtering
+    required: false
+    in: query
+    type: integer
+  xgroup.id.inpath:
+    name: id
+    description: XGroup ID
+    required: true
+    in: path
+    type: integer
+  xgroups.nameSubstr:
+    name: nameSubstr
+    description: for horizontal filtering
+    required: false
+    in: query
+    type: string
+  xgroups.actived:
+    name: actived
+    description: for horizontal filtering
+    required: false
+    in: query
+    type: boolean
+  xgroups.adminid:
+    name: adminid
+    description: for horizontal filtering
+    required: false
+    in: query
+    type: integer
+  xuser.id.inpath:
+    name: id
+    description: XUser ID
+    required: true
+    in: path
+    type: integer
+  xusers.nameSubstr:
+    name: nameSubstr
+    description: for horizontal filtering
+    required: false
+    in: query
+    type: string
+  xusers.lastnameSubstr:
+    name: lastnameSubstr
+    description: for horizontal filtering
+    required: false
+    in: query
+    type: string
+  xusers.phoneSubstr:
+    name: phoneSubstr
+    description: for horizontal filtering
+    required: false
+    in: query
+    type: string
+  xusers.identificationPrefix:
+    name: identificationPrefix
+    description: for horizontal filtering
+    required: false
+    in: query
+    type: string
+  xusers.actived:
+    name: actived
+    description: for horizontal filtering
+    required: false
+    in: query
+    type: boolean
+  xusers.xgroupid:
+    name: xgroupid
+    description: for horizontal filtering
+    required: false
+    in: query
+    type: integer

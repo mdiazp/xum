@@ -1,0 +1,105 @@
+.list-wrapper {
+  display: flex;
+  flex-flow: column wrap;
+}
+
+.list-header {
+  display: flex;
+  flex-flow: row wrap;
+}
+
+@media(max-width:300px) {
+  .list-header {
+    display: flex;
+    flex-flow: column wrap;
+    align-items: center;
+  }
+}
+
+.list-header-title {
+  display: flex;
+  flex-flow: row wrap;
+  align-items: center;
+  color: #26c6da;
+
+  span {
+    margin-left: 5px;
+  }
+}
+
+.flex-space {
+  flex: 1 1 auto;
+}
+
+.list-filter {
+  display: flex;
+  flex-flow: row wrap;
+
+  mat-form-field {
+    margin: 0 10px;
+    width: 150px;
+  };
+}
+
+@media(max-width: 300px) {
+  .list-filter {
+    display: flex;
+    flex-flow: column wrap;
+
+    mat-form-field {
+      margin: 5px 0;
+      width: 100%;
+    };
+  }
+}
+
+.list-table-loading {
+  display: flex;
+  flex-flow: row wrap;
+  //align-items: center;
+  justify-content: center;
+  height: 20px;
+  //width: 100%;
+  //position: fixed;
+}
+
+// XUser Table Styles
+.xuser-row {
+  .xuser-cell {
+    display: flex;
+    flex-flow: row wrap;
+
+    width: 100%;
+    margin: 10px 0;
+  }
+
+  .xuser-info {
+    display: flex;
+    flex-flow: column wrap;
+    justify-content: center;
+    width: 350px;
+    margin: 5px 0;
+  }
+
+  .operations {
+    display: flex;
+    justify-content: center;
+
+    width: 150px;
+    margin: 5px 0;
+  }
+
+  @media(max-width: 390px) {
+    .xuser-cell {
+      justify-content: center;
+    }
+
+    .xuser-info {
+      width: 100%;
+    }
+
+    .operations {
+      width: 100%;
+    }
+  }
+}

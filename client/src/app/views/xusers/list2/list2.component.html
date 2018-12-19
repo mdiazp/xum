@@ -1,0 +1,61 @@
+<mat-card>
+  <mat-card-content>
+    <section class="list-wrapper">
+      <header class="list-header">
+          <span class="list-header-title">
+            <mat-icon>list</mat-icon><span><strong>XUsers (2)</strong></span>
+          </span>
+          <span class="flex-space"></span>
+          <button mat-raised-button color="primary">
+              <mat-icon>add</mat-icon>New</button>
+      </header>
+      <section class="list-filter">
+          <mat-form-field>
+              <input matInput type="text"
+                     placeholder="filtro">
+          </mat-form-field>
+          <mat-form-field>
+              <input matInput type="text"
+                     placeholder="otro filtro">
+          </mat-form-field>
+      </section>
+      <section class="list-table">
+        <!--div class="list-table-loading" *ngIf="(dataSource.loading$ | async) || true">
+            <mat-spinner ></mat-spinner>
+        </div-->
+        <!--mat-table class="lessons-table mat-elevation-z8" [dataSource]="dataSource"-->
+        <mat-table [dataSource]="dataSource">
+            <ng-container matColumnDef="xuser">
+                <!--div *matHeaderCellDef></div-->
+                <div *matCellDef="let xu" class="xuser-cell">
+                  <div class="xuser-info">
+
+                      <div>{{xu.Name + ' ' + xu.LastName}}</div>
+                      <div>{{xu.Identification}}</div>
+                      <div>{{xu.PhoneNumber}}</div>
+                      <div>{{xu.Description}}</div>
+                      <div>{{xu.XGroupID}}</div>
+                      <div>{{xu.Actived}}</div>
+
+                  </div>
+                  <div class="flex-space"></div>
+                  <div class="operations">
+                    <mat-icon color="primary">edit</mat-icon>
+                    <mat-icon color="warn">delete</mat-icon>
+                  </div>
+                </div>
+            </ng-container>
+
+            <!--mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row-->
+
+            <mat-row *matRowDef="let row; columns: displayedColumns" class="xuser-row"></mat-row>
+
+        </mat-table>
+
+        <mat-paginator [length]="(dataSource.count$ | async)" [pageSize]="initialPageSize"
+                       [pageSizeOptions]="pageSizeOptions">
+        </mat-paginator>
+      </section>
+    </section>
+  </mat-card-content>
+</mat-card>

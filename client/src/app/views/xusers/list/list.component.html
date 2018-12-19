@@ -1,0 +1,116 @@
+<mat-card>
+    <mat-card-content>
+      <section class="list-wrapper">
+        <header class="list-header">
+            <span class="list-header-title">
+              <mat-icon>list</mat-icon><span>XUsers</span>
+            </span>
+            <span class="flex-space"></span>
+            <button mat-raised-button color="primary">
+                <mat-icon>add</mat-icon>New</button>
+        </header>
+
+        <mat-accordion class="list-filter-accordion">
+            <mat-expansion-panel>
+                <mat-expansion-panel-header>
+                    <mat-panel-title> Filter </mat-panel-title>
+                    <!--mat-panel-description> Type your name and age </mat-panel-description-->
+                </mat-expansion-panel-header>
+                <mat-form-field>
+                    <input #nameFilter matInput placeholder="Name"> </mat-form-field>
+                <mat-form-field>
+                    <input #lastNameFilter matInput placeholder="Last Name"> </mat-form-field>
+                <mat-form-field>
+                    <input #identificationFilter matInput placeholder="Identification"> </mat-form-field>
+                <mat-form-field>
+                    <mat-select #xgroupFilter placeholder="XGroup">
+                      <mat-option [value]="0">
+                        Todas
+                      </mat-option>
+                      <mat-option *ngFor="let xg of xgroups" [value]="xg.ID">
+                        {{xg.Name}}
+                      </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </mat-expansion-panel>
+        </mat-accordion>
+
+        <!--section class="list-filter">
+            <header class="list-filter-header">
+              Filter
+            </header>
+            <section class="list-filter-body">
+              <mat-form-field>
+                  <input matInput type="text"
+                        placeholder="filtro">
+              </mat-form-field>
+              <mat-form-field>
+                  <input matInput type="text"
+                        placeholder="otro filtro">
+              </mat-form-field>
+            </section>
+        </section-->
+        <section class="list-table">
+          <!--div class="list-table-loading" *ngIf="(dataSource.loading$ | async) || true">
+              <mat-spinner ></mat-spinner>
+          </div-->
+          <!--mat-table class="lessons-table mat-elevation-z8" [dataSource]="dataSource"-->
+          <mat-table [dataSource]="dataSource" class="mat-elevation-z8"
+                matSort matSortActive="id" matSortDirection="asc" matSortDisableClear>
+
+              <ng-container matColumnDef="id">
+                  <mat-header-cell *matHeaderCellDef mat-sort-header>ID</mat-header-cell>
+                  <mat-cell *matCellDef="let xu">{{xu.ID}}</mat-cell>
+              </ng-container>
+
+              <ng-container matColumnDef="name">
+                  <mat-header-cell *matHeaderCellDef mat-sort-header>Name</mat-header-cell>
+                  <mat-cell class="name-cell"
+                            *matCellDef="let xu">
+                            {{xu.Name}} </mat-cell>
+              </ng-container>
+
+              <ng-container matColumnDef="lastName">
+                  <mat-header-cell *matHeaderCellDef mat-sort-header="last_name">LastName</mat-header-cell>
+                  <mat-cell class="lastName-cell"
+                            *matCellDef="let xu">{{xu.LastName}}</mat-cell>
+              </ng-container>
+
+              <ng-container matColumnDef="xgroupName">
+                  <mat-header-cell *matHeaderCellDef>XGroup</mat-header-cell>
+                  <mat-cell class="xgroupID-cell"
+                            *matCellDef="let xu">{{xu.XGroupName}}</mat-cell>
+              </ng-container>
+
+              <ng-container matColumnDef="actived">
+                  <mat-header-cell *matHeaderCellDef>Actived</mat-header-cell>
+                  <mat-cell class="actived-cell"
+                            *matCellDef="let xu">
+                    <mat-icon *ngIf="xu.Actived" color="green">check_box</mat-icon>
+                    <mat-icon *ngIf="!(xu.Actived)">check_box_outline_blank</mat-icon>
+                  </mat-cell>
+              </ng-container>
+
+              <ng-container matColumnDef="operations">
+                  <mat-header-cell *matHeaderCellDef>Operations</mat-header-cell>
+                  <mat-cell class="actived-cell"
+                            *matCellDef="let xu">
+                    <mat-icon>visibility</mat-icon>
+                    <mat-icon>edit</mat-icon>
+                    <mat-icon color="warn">delete</mat-icon>
+                  </mat-cell>
+              </ng-container>
+
+              <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+
+              <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+
+          </mat-table>
+
+          <mat-paginator [length]="(dataSource.count$ | async)" [pageSize]="initialPageSize"
+                         [pageSizeOptions]="pageSizeOptions">
+          </mat-paginator>
+        </section>
+      </section>
+    </mat-card-content>
+  </mat-card>
