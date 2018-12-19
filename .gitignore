@@ -1,8 +1,4 @@
-/server/swagger/*.png
-/server/swagger/*.html
-/server/swagger/*.js
-/server/swagger/*.map
-/server/swagger/*.css
-
 /server/cmd/xum-insert-datos
 /server/cmd/xum-api-client
+
+.vscode/*
